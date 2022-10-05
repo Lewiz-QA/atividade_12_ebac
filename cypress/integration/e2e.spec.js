@@ -36,22 +36,12 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
     it('Deve fazer um pedido na loja Ebac Shop de ponta a ponta', () => {
         cy.visit('produtos/')
 
-        //Adicionando Produto através do QuickView da lista, utilizando a Dependência 'Real Events' para exibir o hover
-        cy.get('.post-3680 > .product-block > .block-inner > .image > .groups-button')
-            .children('[class="button yith-wcqv-button tbay-tooltip"]')
-            .realHover()
-            .click()
-        cy.get('.button-variable-item-XS').click()
-        cy.get(':nth-child(2) > .value > .variable-items-wrapper > .variable-item').click()
-        cy.get('.input-text').clear().type('4')
-        cy.get('.single_add_to_cart_button').click()
-        cy.get('.woocommerce-message').should('contain', '4 × “Atlas Fitness Tank” foram adicionados no seu carrinho.')
-
         //Adicionando mais 3 Produtos da lista via Commands
+        cy.addProdutos('Atlas Fitness Tank', 'XS', 'Blue', '4')
         cy.addProdutos('Argus All-Weather Tank', 'XS', 'Gray', 1)
         cy.addProdutos('Arcadio Gym Short', '32', 'Blue', 2)
         cy.addProdutos('Ajax Full-Zip Sweatshirt', 'L', 'Green', 3)
-
+        
         //Conferindo Quantidade de Itens do Carrinho (badge do header)
         cy.get('.dropdown-toggle > .mini-cart-items').should('contain', 10)
 
@@ -64,7 +54,6 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         cy.get('#coupon_code').type('1')
         cy.get('.form-row-last > .button').click()
         cy.get('.woocommerce-message').should('contain', 'Código de cupom aplicado com sucesso.')
-        cy.get('strong > .woocommerce-Price-amount > bdi').should('contain', 'R$341,00')
 
         //Preenchendo Checkout via PageObject
         EnderecoPage.preencherCheckout(nameFaker, lastNameFaker, companyNameFaker, 'Avenida Brasil', '3010', 'São Paulo', 'São Paulo', '84430000', phoneFaker, mailFaker, 'Favor avisar se a entrega for atrasar.')
