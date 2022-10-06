@@ -31,7 +31,8 @@ Cypress.Commands.add('login', (usuario, senha) => {
     cy.get('.woocommerce-form > .button').click()
 });
 
-Cypress.Commands.add('addProdutos', (produto, tamanho, cor, quantidade) => {
+Cypress.Commands.add('addProdutos', (produto, tamanho, cor, quantidade, irParaCheckout) => {
+    cy.visit('produtos/')
     cy.get('[class="product-block grid"]')
         .contains(produto)
         .click()
@@ -40,7 +41,11 @@ Cypress.Commands.add('addProdutos', (produto, tamanho, cor, quantidade) => {
     cy.get('.input-text').clear().type(quantidade)
     cy.get('.single_add_to_cart_button').click()
     cy.get('.woocommerce-message').should('contain', produto)
-    cy.visit('produtos/')
-
+    
+    if(irParaCheckout == true){
+        cy.get('.woocommerce-message > .button').click()
+        cy.get('.checkout-button').click()
+        cy.wait(5000)
+    }
 })
 

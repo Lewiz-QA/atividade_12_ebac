@@ -19,7 +19,7 @@ context('Funcionalidade Login', () => {
     it('Login com sucesso usando Comando customizado', () => {
         cy.login(dadosLogin.usuario, dadosLogin.senha)
         cy.get('.page-title').should('contain', 'Minha conta')
-        cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should('contain', 'Olá, Lewiz Hamilton')
+        cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should('contain', 'Olá, Tester EBAC')
     });
 
     /*it('Login usando fixture', () => {

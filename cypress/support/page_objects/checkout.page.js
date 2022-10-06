@@ -1,6 +1,9 @@
-class EnderecoPage {
+class CheckoutPage {
 
-    preencherCheckout(nome, sobrenome, empresa, endereco, numero, cidade, estado, cep, telefone, email, observacoes) {
+    preencherCheckout(cupom, nome, sobrenome, empresa, endereco, numero, cidade, estado, cep, telefone, email, observacoes) {  
+        cy.get('.showcoupon').click()
+        cy.get('#coupon_code').type(cupom)
+        cy.get('.form-row-last > .button').click()
         cy.get('#billing_first_name').clear().type(nome)
         cy.get('#billing_last_name').clear().type(sobrenome)
         cy.get('#billing_company').clear().type(empresa)
@@ -13,11 +16,11 @@ class EnderecoPage {
         cy.get('#billing_phone').clear().type(telefone)
         cy.get('#billing_email').clear().type(email)
         cy.get('#order_comments').clear().type(observacoes)
-        cy.get('#payment_method_cod').click()
+        cy.get('.wc_payment_method.payment_method_cod > label').click({ force: true })
         cy.get('[type="checkbox"]').check({ force: true })
         cy.get('#place_order').click()
         cy.wait(5000)
     }
 }
 
-export default new EnderecoPage()
+export default new CheckoutPage()
