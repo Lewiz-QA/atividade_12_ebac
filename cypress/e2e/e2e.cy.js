@@ -14,16 +14,8 @@ describe('Exercício - Testes End-to-end - Fluxo de pedido na loja Ebac Shop', (
 
     var faker = require('faker');
 
-    let nameFaker = faker.name.firstName()
-    let lastNameFaker = faker.name.lastName()
-    let companyNameFaker = faker.company.companyName()
-    let phoneFaker = faker.phone.phoneNumber('41 999108-7359')
-    let mailFaker = faker.internet.email()
-
     //Login com Fixture e comando customizado
     beforeEach(() => {
-        cy.reload()
-        cy.visit('minha-conta')
         cy.fixture('perfil').then(dados => {
             cy.login(dados.usuario, dados.senha)
         })
@@ -43,6 +35,12 @@ describe('Exercício - Testes End-to-end - Fluxo de pedido na loja Ebac Shop', (
     });
 
     it('Deve realizar o Checkout', () => {
+        let nameFaker = faker.name.firstName()
+        let lastNameFaker = faker.name.lastName()
+        let companyNameFaker = faker.company.companyName()
+        let phoneFaker = faker.phone.phoneNumber('41 999108-7359')
+        let mailFaker = faker.internet.email(nameFaker, lastNameFaker, 'mailtest.com.br', { allowSpecialCharacters: false })
+
         //Redirecionando para o Checkout
         cy.irParaCheckout()
 
