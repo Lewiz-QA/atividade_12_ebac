@@ -18,11 +18,11 @@ describe('Exercício - Testes End-to-end - Fluxo de pedido na loja Ebac Shop', (
     let lastNameFaker = faker.name.lastName()
     let companyNameFaker = faker.company.companyName()
     let phoneFaker = faker.phone.phoneNumber('41 999108-7359')
-    let mailFaker = faker.internet.email(nameFaker, lastNameFaker, 'mailtest.com',
-        { allowSpecialCharacters: false })
+    let mailFaker = faker.internet.email()
 
     //Login com Fixture e comando customizado
-    before(() => {
+    beforeEach(() => {
+        cy.reload()
         cy.visit('minha-conta')
         cy.fixture('perfil').then(dados => {
             cy.login(dados.usuario, dados.senha)
@@ -36,15 +36,18 @@ describe('Exercício - Testes End-to-end - Fluxo de pedido na loja Ebac Shop', (
 
     it('Deve adicionar produtos ao Carrinho', () => {
         //Adicionando Produtos via Comandos Customizados, redirecionando para o Checkout no final
-        cy.addProdutos('Atlas Fitness Tank', 'XS', 'Blue', '4', false)
-        cy.addProdutos('Argus All-Weather Tank', 'XS', 'Gray', '1', false)
-        cy.addProdutos('Arcadio Gym Short', '32', 'Blue', '1', false)
-        cy.addProdutos('Ajax Full-Zip Sweatshirt', 'L', 'Green', '1', true)
+        cy.addProdutos('Atlas Fitness Tank', 'XS', 'Blue', 4)
+        cy.addProdutos('Argus All-Weather Tank', 'XS', 'Gray', 1)
+        cy.addProdutos('Arcadio Gym Short', '32', 'Blue', 1)
+        cy.addProdutos('Ajax Full-Zip Sweatshirt', 'L', 'Green', 1)
     });
 
     it('Deve realizar o Checkout', () => {
+        //Redirecionando para o Checkout
+        cy.irParaCheckout()
+
         //Preenchendo Checkout via PageObject, utilizando alguns dados do Faker
-        CheckoutPage.preencherCheckout('1', nameFaker, lastNameFaker, companyNameFaker, 'Avenida Brasil', '3010', 'São Paulo', 'São Paulo', '80010-110', phoneFaker, mailFaker, 'Favor avisar se a entrega for atrasar.')
+        CheckoutPage.preencherCheckout(1, nameFaker, lastNameFaker, companyNameFaker, 'Avenida Brasil', '3010', 'Campinas', 'São Paulo', '81010-110', phoneFaker, mailFaker, 'Favor entrar em contato se a entrega for atrasar.')
 
         //Validando informações da tela Pedido Recebido, após concluir o Checkout
         cy.get('.woocommerce-notice').should('contain', 'Obrigado. Seu pedido foi recebido.')

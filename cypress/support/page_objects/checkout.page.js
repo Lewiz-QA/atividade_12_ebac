@@ -3,7 +3,8 @@ class CheckoutPage {
     preencherCheckout(cupom, nome, sobrenome, empresa, endereco, numero, cidade, estado, cep, telefone, email, observacoes) {  
         cy.get('.showcoupon').click()
         cy.get('#coupon_code').type(cupom)
-        cy.get('.form-row-last > .button').click()
+        cy.get('.form-row-last > .button').click({timeout: 10000})    
+        cy.get('.woocommerce-message').should('contain', 'Código de cupom aplicado com sucesso.')
         cy.get('#billing_first_name').clear().type(nome)
         cy.get('#billing_last_name').clear().type(sobrenome)
         cy.get('#billing_company').clear().type(empresa)

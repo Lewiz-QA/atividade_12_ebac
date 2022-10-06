@@ -31,7 +31,7 @@ Cypress.Commands.add('login', (usuario, senha) => {
     cy.get('.woocommerce-form > .button').click()
 });
 
-Cypress.Commands.add('addProdutos', (produto, tamanho, cor, quantidade, irParaCheckout) => {
+Cypress.Commands.add('addProdutos', (produto, tamanho, cor, quantidade) => {
     cy.visit('produtos/')
     cy.get('[class="product-block grid"]')
         .contains(produto)
@@ -40,12 +40,11 @@ Cypress.Commands.add('addProdutos', (produto, tamanho, cor, quantidade, irParaCh
     cy.get('.button-variable-item-' + cor).click()
     cy.get('.input-text').clear().type(quantidade)
     cy.get('.single_add_to_cart_button').click()
-    cy.get('.woocommerce-message').should('contain', produto)
-    
-    if(irParaCheckout == true){
-        cy.get('.woocommerce-message > .button').click()
-        cy.get('.checkout-button').click()
-        cy.wait(5000)
-    }
+    cy.get('.woocommerce-message').should('contain', produto)    
 })
 
+Cypress.Commands.add('irParaCheckout', () => {
+    cy.get('.dropdown-toggle > .text-skin > .icon-basket').click().wait(4000)
+    cy.get('#cart > .dropdown-menu > .widget_shopping_cart_content > .mini_cart_content > .mini_cart_inner > .mcart-border > .buttons > .checkout').click()
+    cy.wait(4000)
+})
