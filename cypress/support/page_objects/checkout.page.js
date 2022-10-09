@@ -4,7 +4,6 @@ class CheckoutPage {
         cy.get('.showcoupon').click()
         cy.get('#coupon_code').type(cupom)
         cy.get('.form-row-last > .button').click({ timeout: 10000 })
-        cy.get('.woocommerce-message').should('contain', 'Código de cupom aplicado com sucesso.')
         cy.get('#billing_first_name').clear().type(nome)
         cy.get('#billing_last_name').clear().type(sobrenome)
         cy.get('#billing_company').clear().type(empresa)
@@ -18,9 +17,9 @@ class CheckoutPage {
         cy.get('#billing_email').clear().type(email)
         cy.get('#order_comments').clear().type(observacoes)
         cy.get('.wc_payment_method.payment_method_cod > label').click({ force: true })
-        cy.get('[type="checkbox"]').check({ force: true })
+        cy.get('#terms').check({ force: true })
         cy.get('#place_order').click()
-        cy.wait(5000)
+        cy.wait(4000)
     }
 }
 
