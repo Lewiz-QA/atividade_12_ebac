@@ -39,13 +39,13 @@ context('Exercício - Testes End-to-end - Fluxo de pedido na loja Ebac Shop', ()
         cy.addProdutos('Ajax Full-Zip Sweatshirt', 'L', 'Green', 1, true)
 
         //Obtendo valor do Carrinho para compará-lo depois com o valor do Pedido Recebido
-        cy.get('.sub-title > .woocommerce-Price-amount > bdi').invoke('text').then((text) => { cy.wrap('text').as('cartValue') })
+        cy.get('.sub-title > .woocommerce-Price-amount > bdi').invoke('text').as('cartValue')
 
         //Preenchendo Checkout via PageObject, utilizando alguns dados do Faker
         CheckoutPage.preencherCheckout(1, nameFaker, lastNameFaker, companyNameFaker, 'Rua Teste', '3010', 'Campinas', 'São Paulo', '81010-110', phoneFaker, mailFaker, 'Favor entrar em contato se a entrega for atrasar.')
 
         //Obtendo valor do Pedido Recebido
-        cy.get('strong > .woocommerce-Price-amount > bdi').invoke('text').then((text) => { cy.wrap('text').as('checkoutValue') })
+        cy.get('strong > .woocommerce-Price-amount > bdi').invoke('text').as('checkoutValue')
 
         //Validando informações da tela Pedido Recebido, após concluir o Checkout
         cy.get('.woocommerce-notice').should('contain', 'Obrigado. Seu pedido foi recebido.')
@@ -54,5 +54,5 @@ context('Exercício - Testes End-to-end - Fluxo de pedido na loja Ebac Shop', ()
                 expect(cartValue).to.eq(checkoutValue)
             })
         })
-    });
-});
+    })
+})
