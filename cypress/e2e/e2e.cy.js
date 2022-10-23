@@ -34,9 +34,9 @@ context('Exercício - Testes End-to-end - Fluxo de pedido na loja Ebac Shop', ()
     it('Deve fazer um pedido na loja Ebac Shop de ponta a ponta', () => {
         //Adicionando Produtos via Comandos Customizados, redirecionando para o Checkout no final
         cy.addProdutos('Atlas Fitness Tank', 'XS', 'Blue', 4, false)
-        cy.addProdutos('Argus All-Weather Tank', 'XS', 'Gray', 1, false)
-        cy.addProdutos('Arcadio Gym Short', '32', 'Blue', 1, false)
-        cy.addProdutos('Ajax Full-Zip Sweatshirt', 'L', 'Green', 1, true)
+        //cy.addProdutos('Argus All-Weather Tank', 'XS', 'Gray', 1, false)
+        //cy.addProdutos('Arcadio Gym Short', '32', 'Blue', 1, false)
+        //cy.addProdutos('Ajax Full-Zip Sweatshirt', 'L', 'Green', 1, true)
 
         //Obtendo valor do Carrinho para compará-lo depois com o valor do Pedido Recebido
         cy.get('.sub-title > .woocommerce-Price-amount > bdi').invoke('text').as('cartValue')
